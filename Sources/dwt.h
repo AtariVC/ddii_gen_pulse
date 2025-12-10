@@ -1,7 +1,7 @@
 #ifndef _DWT_H_
 #define _DWT_H_
 
-#include "./CM4/system.h"
+#include "system.h"
 
 
 #define US_TO_DWT(x) ((x) * (SYSTEM_CORE_CLOCK/1000000))
