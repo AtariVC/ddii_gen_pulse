@@ -1,33 +1,4 @@
 // for mac
-{
-    // Use IntelliSense to learn about possible attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
-    "version": "0.2.0",
-    "configurations": [
-		{
-			"name": "ARM-Debug",
-			"cwd": "${workspaceRoot}",
-			"executable": "${workspaceRoot}\\output\\ddii_gen_pulse.elf",
-			"svdFile": "/Users/vladk/ARM_VSCode utill/SVD/cmsis-svd-stm32/stm32f4/STM32F405.svd",
-			"gdbPath": "/Applications/ArmGNUToolchain/13.2.Rel1/arm-none-eabi/bin/arm-none-eabi-gdb",
-			"request": "launch",
-			"type": "cortex-debug",
-			"servertype": "openocd",
-			"device": "cortex-m4",
-			"interface": "swd",
-			"runToEntryPoint": "main",
-			"configFiles": [
-				"/usr/local/Cellar/open-ocd/0.12.0_1/share/openocd/scripts/interface/stlink-v2-1.cfg",
-				"/usr/local/Cellar/open-ocd/0.12.0_1/share/openocd/scripts/target/stm32f4x.cfg"
-			],
-            "preLaunchTask": "Write"
-		}
-
-    ]
-}
-
-// for windows
 // {
 //     // Use IntelliSense to learn about possible attributes.
 //     // Hover to view descriptions of existing attributes.
@@ -52,6 +23,32 @@
 // 			],
 //             "preLaunchTask": "Write"
 // 		}
-
 //     ]
 // }
+// for windows
+{
+	// Use IntelliSense to learn about possible attributes.
+	// Hover to view descriptions of existing attributes.
+	// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "ARM-Debug",
+			"cwd": "${workspaceRoot}",
+			"executable": "${workspaceRoot}\\output\\ddii_gen_pulse.elf",
+			"svdFile": "D:\\git\\stm32-svd\\svd\\stm32f405.svd",
+			"gdbPath": "D:\\git\\arm_none_eabi\\10_2020-q4-major\\bin\\arm-none-eabi-gdb.exe",
+			"request": "launch",
+			"type": "cortex-debug",
+			"servertype": "openocd",
+			"device": "cortex-m4",
+			"interface": "swd",
+			"runToEntryPoint": "main",
+			"configFiles": [
+				"D:\\git\\openocd-20211118\\OpenOCD-20211118-0.11.0\\share\\openocd\\scripts\\interface\\stlink-v2-1.cfg",
+				"D:\\git\\openocd-20211118\\OpenOCD-20211118-0.11.0\\share\\openocd\\scripts\\target\\stm32f4x.cfg"
+			],
+			"preLaunchTask": "Write"
+		}
+	]
+}

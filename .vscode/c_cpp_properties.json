@@ -1,81 +1,81 @@
-{
-    "configurations": [
-        {
-            "name": "Cortex-Builder",
-            "compilerPath": "/Applications/ArmGNUToolchain/13.2.Rel1/arm-none-eabi/bin/arm-none-eabi-gcc",
-            "includePath": [
-                "${workspaceRoot}",
-                "${workspaceRoot}/Core/Inc",
-                "${workspaceRoot}/build",
-                "${workspaceRoot}/output",
-                "${workspaceRoot}/Drivers/STM32F4xx_HAL_Driver/Inc",
-                "${workspaceRoot}/Drivers/CMSIS/Include",
-                "${workspaceRoot}/Drivers/CMSIS/Device/ST/STM32F4xx/Include",
-                "/Applications/ArmGNUToolchain/13.2.Rel1/arm-none-eabi/arm-none-eabi/include",
-                "/Applications/ArmGNUToolchain/13.2.Rel1/arm-none-eabi/arm-none-eabi/include/c++/13.2.1",
-                "/Applications/ArmGNUToolchain/13.2.Rel1/arm-none-eabi/lib/gcc/arm-none-eabi/13.2.1/include",
-                "/Applications/ArmGNUToolchain/13.2.Rel1/arm-none-eabi/lib/gcc/arm-none-eabi/13.2.1/include-fixed",
-                "/Applications/ArmGNUToolchain/13.2.Rel1/arm-none-eabi/arm-none-eabi/include/machine",
-                "/Applications/ArmGNUToolchain/13.2.Rel1/arm-none-eabi/arm-none-eabi/include/newlib-nano",
-                "/Applications/ArmGNUToolchain/13.2.Rel1/arm-none-eabi/arm-none-eabi/include/sys"
-            ],
-            "defines": [
-                "_DEBUG",
-                "UNICODE",
-                "_UNICODE",
-                "USE_HAL_DRIVER",
-                "__UINT32_TYPE__=long unsigned int"
-            ],
-            "intelliSenseMode": "${default}",
-            "cStandard": "gnu11",
-            "cppStandard": "c++17",
-            "configurationProvider": "ms-vscode.makefile-tools"
-        }
-    ],  
-    "version": 4,
-    "enableConfigurationSquiggles": true
-}
-
-// for windows
 // {
 //     "configurations": [
 //         {
 //             "name": "Cortex-Builder",
-//             "compilerPath": "D:/STM32/arm_none_eabi/10_2020-q4-major/bin/arm-none-eabi-gcc.exe",
+//             "compilerPath": "/Applications/ArmGNUToolchain/13.2.Rel1/arm-none-eabi/bin/arm-none-eabi-gcc",
 //             "includePath": [
-//                 "${workspaceRoot}/Drivers/CMSIS/Device/ST/STM32F4xx/Include",
 //                 "${workspaceRoot}",
-//                 "${workspaceRoot}/Sources",
 //                 "${workspaceRoot}/Core/Inc",
-//                 "${workspaceRoot}/Core/Src",
-//                 // "${workspaceRoot}/My_Lib/Inc",
-//                 // "${workspaceRoot}/My_Lib/Src",
-//                 "${workspaceRoot}/Drivers/CMSIS",
 //                 "${workspaceRoot}/build",
 //                 "${workspaceRoot}/output",
 //                 "${workspaceRoot}/Drivers/STM32F4xx_HAL_Driver/Inc",
 //                 "${workspaceRoot}/Drivers/CMSIS/Include",
-//                 "D:/STM32/arm_none_eabi/10_2020-q4-major/arm-none-eabi/include",
-//                 "D:/STM32/arm_none_eabi/10_2020-q4-major/arm-none-eabi/include",
-//                 "D:/STM32/arm_none_eabi/10_2020-q4-major/lib/gcc/arm-none-eabi/10.2.1/include",
-//                 "D:/STM32/arm_none_eabi/10_2020-q4-major/lib/gcc/arm-none-eabi/10.2.1/include-fixed",
-//                 "D:/STM32/arm_none_eabi/10_2020-q4-major/arm-none-eabi/include/machine",
-//                 "D:/STM32/arm_none_eabi/10_2020-q4-major/arm-none-eabi/include/newlib-nano",
-//                 "D:/STM32/arm_none_eabi/10_2020-q4-major/arm-none-eabi/include/sys"
+//                 "${workspaceRoot}/Drivers/CMSIS/Device/ST/STM32F4xx/Include",
+//                 "/Applications/ArmGNUToolchain/13.2.Rel1/arm-none-eabi/arm-none-eabi/include",
+//                 "/Applications/ArmGNUToolchain/13.2.Rel1/arm-none-eabi/arm-none-eabi/include/c++/13.2.1",
+//                 "/Applications/ArmGNUToolchain/13.2.Rel1/arm-none-eabi/lib/gcc/arm-none-eabi/13.2.1/include",
+//                 "/Applications/ArmGNUToolchain/13.2.Rel1/arm-none-eabi/lib/gcc/arm-none-eabi/13.2.1/include-fixed",
+//                 "/Applications/ArmGNUToolchain/13.2.Rel1/arm-none-eabi/arm-none-eabi/include/machine",
+//                 "/Applications/ArmGNUToolchain/13.2.Rel1/arm-none-eabi/arm-none-eabi/include/newlib-nano",
+//                 "/Applications/ArmGNUToolchain/13.2.Rel1/arm-none-eabi/arm-none-eabi/include/sys"
 //             ],
 //             "defines": [
 //                 "_DEBUG",
 //                 "UNICODE",
 //                 "_UNICODE",
 //                 "USE_HAL_DRIVER",
-//                 "__UINT32_TYPE__=long unsigned int",
-//                 "STM32F405"
+//                 "__UINT32_TYPE__=long unsigned int"
 //             ],
 //             "intelliSenseMode": "${default}",
 //             "cStandard": "gnu11",
 //             "cppStandard": "c++17",
 //             "configurationProvider": "ms-vscode.makefile-tools"
 //         }
-//     ],
-//     "version": 4
+//     ],  
+//     "version": 4,
+//     "enableConfigurationSquiggles": true
 // }
+
+// for windows
+{
+    "configurations": [
+        {
+            "name": "Cortex-Builder",
+            "compilerPath": "D:/STM32/arm_none_eabi/10_2020-q4-major/bin/arm-none-eabi-gcc.exe",
+            "includePath": [
+                "${workspaceRoot}/Drivers/CMSIS/Device/ST/STM32F4xx/Include",
+                "${workspaceRoot}",
+                "${workspaceRoot}/Sources",
+                "${workspaceRoot}/Core/Inc",
+                "${workspaceRoot}/Core/Src",
+                // "${workspaceRoot}/My_Lib/Inc",
+                // "${workspaceRoot}/My_Lib/Src",
+                "${workspaceRoot}/Drivers/CMSIS",
+                "${workspaceRoot}/build",
+                "${workspaceRoot}/output",
+                "${workspaceRoot}/Drivers/STM32F4xx_HAL_Driver/Inc",
+                "${workspaceRoot}/Drivers/CMSIS/Include",
+                "D:/STM32/arm_none_eabi/10_2020-q4-major/arm-none-eabi/include",
+                "D:/STM32/arm_none_eabi/10_2020-q4-major/arm-none-eabi/include",
+                "D:/STM32/arm_none_eabi/10_2020-q4-major/lib/gcc/arm-none-eabi/10.2.1/include",
+                "D:/STM32/arm_none_eabi/10_2020-q4-major/lib/gcc/arm-none-eabi/10.2.1/include-fixed",
+                "D:/STM32/arm_none_eabi/10_2020-q4-major/arm-none-eabi/include/machine",
+                "D:/STM32/arm_none_eabi/10_2020-q4-major/arm-none-eabi/include/newlib-nano",
+                "D:/STM32/arm_none_eabi/10_2020-q4-major/arm-none-eabi/include/sys"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE",
+                "USE_HAL_DRIVER",
+                "__UINT32_TYPE__=long unsigned int",
+                "STM32F405"
+            ],
+            "intelliSenseMode": "${default}",
+            "cStandard": "gnu11",
+            "cppStandard": "c++17",
+            "configurationProvider": "ms-vscode.makefile-tools"
+        }
+    ],
+    "version": 4
+}

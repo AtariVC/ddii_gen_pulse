@@ -16,7 +16,7 @@
             "problemMatcher": []
         },
         {
-            "label": "Write firmware",
+            "label": "Write",
             "type": "shell",
             "command": "make prog",
             "problemMatcher": []
