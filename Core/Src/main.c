@@ -107,12 +107,10 @@ static void DAC_Generate(uint16_t dac1, uint16_t dac2, uint8_t din, uint8_t widt
   hdac.Instance->SWTRIGR = DAC_SWTRIGR_SWTRIG1 | DAC_SWTRIGR_SWTRIG2;
 
   Delay_us(width_time_us);
-
   (void)HAL_DAC_SetValue(&hdac, DAC_CHANNEL_1, DAC_ALIGN_12B_R, 0U);
   (void)HAL_DAC_SetValue(&hdac, DAC_CHANNEL_2, DAC_ALIGN_12B_R, 0U);
   hdac.Instance->SWTRIGR = DAC_SWTRIGR_SWTRIG1 | DAC_SWTRIGR_SWTRIG2;
-
-  Delay_us(1U);
+  Delay_us(1);
   GPIOB->BSRR = ((uint32_t)0x1Fu) << (10 + 16);
 
   if (primask == 0U)

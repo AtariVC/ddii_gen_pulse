@@ -212,8 +212,13 @@ clean:
 # clean up
 #######################################
 clean_up:
-	$(RM) $(BUILD_DIR)
-	$(RM) $(OUTPUT_DIR)
+ifeq ($(OS),Windows_NT)
+	if exist $(BUILD_DIR) rmdir /S /Q $(BUILD_DIR)
+	if exist $(OUTPUT_DIR) rmdir /S /Q $(OUTPUT_DIR)
+else
+	rm -rf $(BUILD_DIR)
+	rm -rf $(OUTPUT_DIR)
+endif
   
 #######################################
 # dependencies
