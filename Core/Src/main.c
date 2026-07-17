@@ -23,6 +23,7 @@
 /* USER CODE BEGIN Includes */
 #define  CMD_GP_SET_PARAMS    1
 #define  CMD_GP_GENERATE      2
+#define  CMD_DP_GENERATE      3
 uint8_t Buff[256];
 /* USER CODE END Includes */
 
@@ -62,6 +63,7 @@ static void MX_USART1_UART_Init(void);
 static void DWT_Init(void);
 static void Delay_us(uint32_t us);
 static void DAC_Generate(uint16_t dac1, uint16_t dac2, uint8_t din, uint8_t width_time_us);
+static void DIN_Generate(uint8_t din, uint8_t width_time_us);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -104,14 +106,37 @@ static void DAC_Generate(uint16_t dac1, uint16_t dac2, uint8_t din, uint8_t widt
   __disable_irq();
 
   GPIOB->BSRR = ((uint32_t)(din & 0x1Fu)) << 10;
-  hdac.Instance->SWTRIGR = DAC_SWTRIGR_SWTRIG1 | DAC_SWTRIGR_SWTRIG2;
+  // hdac.Instance->SWTRIGR = DAC_SWTRIGR_SWTRIG1 | DAC_SWTRIGR_SWTRIG2;
 
   Delay_us(width_time_us);
+  hdac.Instance->SWTRIGR = DAC_SWTRIGR_SWTRIG1 | DAC_SWTRIGR_SWTRIG2;
   (void)HAL_DAC_SetValue(&hdac, DAC_CHANNEL_1, DAC_ALIGN_12B_R, 0U);
   (void)HAL_DAC_SetValue(&hdac, DAC_CHANNEL_2, DAC_ALIGN_12B_R, 0U);
-  hdac.Instance->SWTRIGR = DAC_SWTRIGR_SWTRIG1 | DAC_SWTRIGR_SWTRIG2;
   Delay_us(1);
   GPIOB->BSRR = ((uint32_t)0x1Fu) << (10 + 16);
+
+  if (primask == 0U)
+  {
+    __enable_irq();
+  }
+}
+
+static void DIN_Generate(uint8_t din, uint8_t width_time_us)
+{
+  const uint32_t primask = __get_PRIMASK();
+  __disable_irq();
+  uint8_t i, io;
+  for(i = 0; i < 5; i++){
+    io = (din >> (i)) & 0x1;
+    GPIOB->BSRR |= ((uint32_t)(io & 0x1Fu)) << 10+i ;
+  }
+  // GPIOB->BSRR = ((uint32_t)(din & 0x1Fu)) << 10;
+  Delay_us(width_time_us);
+  for(i = 0; i < 5; i++){
+    io = (din >> (i)) & 0x1;
+    GPIOB->BSRR |= ((uint32_t)(io & 0x1Fu)) << 10+16+i ;
+  }
+  // GPIOB->BSRR = ((uint32_t)0x1Fu) << (10 + 16);
 
   if (primask == 0U)
   {
@@ -181,18 +206,22 @@ int main(void)
       {
         case CMD_GP_SET_PARAMS:
           if (HAL_UART_Receive(&huart1, Buff, 6, 20) == HAL_OK)
-          {}
             DAC1_Level = ((uint16_t)Buff[0] << 8) | Buff[1];
             DAC2_Level = ((uint16_t)Buff[2] << 8) | Buff[3];
             DIN_Data = Buff[4];
             PulseWidth = Buff[5];
             (void)HAL_UART_Transmit(&huart1, &c, 1, 10);
-          
           break;
         case CMD_GP_GENERATE:
           DAC_Generate(DAC1_Level, DAC2_Level, DIN_Data, PulseWidth);
           (void)HAL_UART_Transmit(&huart1, &c, 1, 10);
           break;
+        case CMD_DP_GENERATE:
+          if (HAL_UART_Receive(&huart1, Buff, 6, 20) == HAL_OK)
+          DIN_Data = Buff[4];
+          PulseWidth = Buff[5];
+          DIN_Generate(DIN_Data, PulseWidth);
+          (void)HAL_UART_Transmit(&huart1, &c, 1, 10);
         default:
           break;
       }
@@ -224,7 +253,12 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
   RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
-  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
+  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
+  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;
+  RCC_OscInitStruct.PLL.PLLM = 12;
+  RCC_OscInitStruct.PLL.PLLN = 192;
+  RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
+  RCC_OscInitStruct.PLL.PLLQ = 4;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
   {
     Error_Handler();
@@ -234,12 +268,12 @@ void SystemClock_Config(void)
   */
   RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
                               |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
-  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_HSI;
+  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
-  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
-  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
+  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV4;
+  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV4;
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0) != HAL_OK)
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_4) != HAL_OK)
   {
     Error_Handler();
   }
@@ -273,8 +307,8 @@ static void MX_DAC_Init(void)
 
   /** DAC channel OUT1 config
   */
-  sConfig.DAC_Trigger = DAC_TRIGGER_SOFTWARE;
-  sConfig.DAC_OutputBuffer = DAC_OUTPUTBUFFER_DISABLE;
+  sConfig.DAC_Trigger = DAC_TRIGGER_NONE;
+  sConfig.DAC_OutputBuffer = DAC_OUTPUTBUFFER_ENABLE;
   if (HAL_DAC_ConfigChannel(&hdac, &sConfig, DAC_CHANNEL_1) != HAL_OK)
   {
     Error_Handler();
@@ -350,7 +384,7 @@ static void MX_GPIO_Init(void)
                           |GPIO_PIN_14;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
 /* USER CODE BEGIN MX_GPIO_Init_2 */
