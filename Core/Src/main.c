@@ -181,13 +181,13 @@ int main(void)
       {
         case CMD_GP_SET_PARAMS:
           if (HAL_UART_Receive(&huart1, Buff, 6, 20) == HAL_OK)
-          {
+          {}
             DAC1_Level = ((uint16_t)Buff[0] << 8) | Buff[1];
             DAC2_Level = ((uint16_t)Buff[2] << 8) | Buff[3];
             DIN_Data = Buff[4];
             PulseWidth = Buff[5];
             (void)HAL_UART_Transmit(&huart1, &c, 1, 10);
-          }
+          
           break;
         case CMD_GP_GENERATE:
           DAC_Generate(DAC1_Level, DAC2_Level, DIN_Data, PulseWidth);
